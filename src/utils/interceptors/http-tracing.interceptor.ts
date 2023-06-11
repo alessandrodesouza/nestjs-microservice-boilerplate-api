@@ -107,7 +107,7 @@ export class HttpTracingInterceptor implements NestInterceptor {
           logger.log(message);
         },
         error: (message: string) => {
-          logger.error(new ApiInternalServerException(message));
+          logger.error({ error: new ApiInternalServerException(message) });
         }
       }
     };

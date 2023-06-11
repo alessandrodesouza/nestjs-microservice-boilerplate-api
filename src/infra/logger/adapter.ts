@@ -1,7 +1,7 @@
 import { LevelWithSilent } from 'pino';
 import { HttpLogger } from 'pino-http';
 
-import { ErrorType, MessageType } from './types';
+import { MessageErrorType, MessageType } from './types';
 
 export abstract class ILoggerAdapter<T extends HttpLogger = HttpLogger> {
   abstract logger: T;
@@ -17,6 +17,6 @@ export abstract class ILoggerAdapter<T extends HttpLogger = HttpLogger> {
   abstract trace({ message, context, obj }: MessageType): void;
   abstract info({ message, context, obj }: MessageType): void;
   abstract warn({ message, context, obj }: MessageType): void;
-  abstract error(error: ErrorType, message?: string, context?: string): void;
-  abstract fatal(error: ErrorType, message?: string, context?: string): void;
+  abstract error({ error, message, context }: MessageErrorType): void;
+  abstract fatal({ error, message, context }: MessageErrorType): void;
 }

@@ -46,7 +46,7 @@ async function bootstrap() {
     if (!(error instanceof BaseException)) {
       const customError = new ApiInternalServerException(error?.message);
       customError.stack = error.stack;
-      loggerService.fatal(customError);
+      loggerService.fatal({ error: customError });
     }
   });
 

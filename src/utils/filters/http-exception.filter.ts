@@ -23,7 +23,7 @@ export class AppExceptionFilter implements ExceptionFilter {
 
     const message = this.getMessage(exception);
 
-    this.loggerService.error(exception, message, exception.context);
+    this.loggerService.error({ error: exception, message, context: exception.context });
 
     response.status(status).json({
       error: {

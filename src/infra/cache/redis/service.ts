@@ -17,7 +17,7 @@ export class RedisService implements Partial<ICacheAdapter<RedisClientType>> {
 
   async isConnected(): Promise<void> {
     const ping = await this.client.ping();
-    if (ping !== 'PONG') this.throwException('redis disconnected.');
+    if (ping !== 'PONG') new ApiInternalServerException('redis disconnected.');
   }
 
   async connect(): Promise<RedisClientType> {
@@ -68,9 +68,5 @@ export class RedisService implements Partial<ICacheAdapter<RedisClientType>> {
 
   async hGetAll(key: CacheKeyArgument): Promise<unknown | unknown[]> {
     return await this.client.hGetAll(key);
-  }
-
-  private throwException(error: string) {
-    throw new ApiInternalServerException(error);
   }
 }

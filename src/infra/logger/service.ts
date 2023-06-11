@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { BaseException } from '@/utils/exception';
 
 import { ILoggerAdapter } from './adapter';
-import { ErrorType, MessageType } from './types';
+import { ErrorType, MessageErrorType, MessageType } from './types';
 
 @Injectable({ scope: Scope.REQUEST })
 export class LoggerService implements ILoggerAdapter {
@@ -69,7 +69,7 @@ export class LoggerService implements ILoggerAdapter {
     this.logger.logger.warn([obj, message].find(Boolean), message);
   }
 
-  error(error: ErrorType, message?: string, context?: string): void {
+  error({ error, message, context }: MessageErrorType): void {
     const errorResponse = this.getErrorResponse(error);
 
     const response =
@@ -99,7 +99,7 @@ export class LoggerService implements ILoggerAdapter {
     );
   }
 
-  fatal(error: ErrorType, message?: string, context?: string): void {
+  fatal({ error, message, context }: MessageErrorType): void {
     this.logger.logger.fatal(
       {
         message: error.message || message,
